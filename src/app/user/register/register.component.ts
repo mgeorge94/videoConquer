@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserDataInterface } from 'src/app/models/user.model';
@@ -8,8 +8,6 @@ import { UserDataInterface } from 'src/app/models/user.model';
 	styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-	@Output() finishedSubmitting: EventEmitter<boolean> = new EventEmitter<boolean>();
-
 	isSubmitting = false;
 
 	name = new FormControl('', [Validators.required, Validators.minLength(3)]);
@@ -39,7 +37,6 @@ export class RegisterComponent {
 
 		try {
 			await this.auth.createUser(this.registerForm.value as UserDataInterface);
-			this.finishedSubmitting.emit(true);
 		} catch (e) {
 			console.error(e);
 			this.alertMsg = 'Something went wrong!';

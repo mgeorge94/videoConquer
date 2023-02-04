@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
@@ -11,8 +11,6 @@ export class LoginComponent implements OnInit {
 		email: '',
 		password: '',
 	};
-	@Output()
-	finishedSubmitting: EventEmitter<boolean> = new EventEmitter<boolean>();
 	showAlert = false;
 	alertMsg = 'Please wait! Your account is being created';
 	alertColor = 'blue';
@@ -27,7 +25,6 @@ export class LoginComponent implements OnInit {
 		this.isSubmitting = true;
 		try {
 			await this.auth.signInWithEmailAndPassword(this.credentials.email, this.credentials.password);
-			this.finishedSubmitting.emit(true);
 		} catch (e) {
 			console.error(e);
 			this.alertMsg = 'Something went wrong!';
