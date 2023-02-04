@@ -3,7 +3,7 @@
 	id="header"
 	class="bg-secondary"
 >
-	<nav class="container mx-auto flex justify-start items-center py-8 px-4">
+	<nav class="container mx-auto flex justify-start items-center py-8">
 		<!-- App Name -->
 		<a
 			class="text-3xl text-indigo-400 font-bold mr-4"
@@ -11,11 +11,38 @@
 			>VideoConquer</a
 		>
 
-		<div class="flex flex-grow items-center">
+		<div class="flex flex-grow justify-between">
 			<!-- Primary Navigation -->
 			<ul class="flex flex-row mt-1">
 				<!-- Navigation Links -->
-				<li *ngIf="!(auth.isAuthenticated$ | async); else authLinks">
+
+				<li *ngIf="auth.isAuthenticated$ | async">
+					<a
+						class="px-2"
+						routerLinkActive="font-bold text-indigo-400 mb-6"
+						routerLink="/manage"
+						[routerLinkActiveOptions]="{ exact: true }"
+						>Manage</a
+					>
+				</li>
+				<li *ngIf="auth.isAuthenticated$ | async">
+					<a
+						class="px-2"
+						href="/upload"
+						>Upload</a
+					>
+				</li>
+				<li>
+					<a
+						class="px-2"
+						routerLink="/about"
+						routerLinkActive="font-bold text-indigo-400"
+						>About</a
+					>
+				</li>
+			</ul>
+			<ul class="flex flex-row-reverse mt-1">
+				<li *ngIf="!(auth.isAuthenticated$ | async); else logOut">
 					<a
 						class="px-2"
 						href="#"
@@ -24,23 +51,7 @@
 						Login / Register
 					</a>
 				</li>
-				<ng-template #authLinks>
-					<li>
-						<a
-							class="px-2"
-							routerLinkActive="font-bold text-indigo-400 mb-6"
-							routerLink="/manage"
-							[routerLinkActiveOptions]="{ exact: true }"
-							>Manage</a
-						>
-					</li>
-					<li>
-						<a
-							class="px-2"
-							href="/upload"
-							>Upload</a
-						>
-					</li>
+				<ng-template #logOut>
 					<li>
 						<a
 							class="px-2"
@@ -50,14 +61,6 @@
 						>
 					</li>
 				</ng-template>
-				<li>
-					<a
-						class="px-2"
-						routerLink="/about"
-						routerLinkActive="font-bold text-indigo-400"
-						>About</a
-					>
-				</li>
 			</ul>
 		</div>
 	</nav>
