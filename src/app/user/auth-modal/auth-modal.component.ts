@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ModalService} from 'src/app/services/modal.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
 	selector: 'app-auth-modal',
@@ -14,5 +14,8 @@ export class AuthModalComponent implements OnInit, OnDestroy {
 	}
 	ngOnDestroy(): void {
 		this.modal.unregister('auth');
+	}
+	closeModal() {
+		setTimeout(() => this.modal.toggleModal('auth'), 1000);
 	}
 }
