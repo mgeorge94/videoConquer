@@ -28,14 +28,16 @@
 					<li>
 						<a
 							class="px-2"
-							href="#"
+							routerLinkActive="font-bold text-indigo-400 mb-6"
+							routerLink="/manage"
+							[routerLinkActiveOptions]="{ exact: true }"
 							>Manage</a
 						>
 					</li>
 					<li>
 						<a
 							class="px-2"
-							href="#"
+							href="/upload"
 							>Upload</a
 						>
 					</li>
@@ -52,6 +54,7 @@
 					<a
 						class="px-2"
 						routerLink="/about"
+						routerLinkActive="font-bold text-indigo-400"
 						>About</a
 					>
 				</li>
