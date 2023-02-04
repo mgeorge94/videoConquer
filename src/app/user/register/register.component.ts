@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserDataInterface } from 'src/app/models/user.model';
+import { RegisterValidators } from '../validators/register-validators';
 @Component({
 	selector: 'app-register',
 	templateUrl: './register.component.html',
@@ -18,13 +19,17 @@ export class RegisterComponent {
 	showAlert = false;
 	alertMsg = 'Please wait! Your account is being created';
 	alertColor = 'blue';
-	registerForm = new FormGroup({
-		name: this.name,
-		email: this.email,
-		age: this.age,
-		password: this.password,
-		confirm_password: this.confirm_password,
-	});
+
+	registerForm = new FormGroup(
+		{
+			name: this.name,
+			email: this.email,
+			age: this.age,
+			password: this.password,
+			confirm_password: this.confirm_password,
+		},
+		[RegisterValidators.match('password', 'confirm_password')]
+	);
 	constructor(private auth: AuthService) {}
 
 	async register() {
