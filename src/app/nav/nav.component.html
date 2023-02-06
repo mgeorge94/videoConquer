@@ -19,8 +19,8 @@
 				<li *ngIf="auth.isAuthenticated$ | async">
 					<a
 						class="px-2"
-						routerLinkActive="font-bold text-indigo-400 mb-6"
 						routerLink="/manage"
+						routerLinkActive="font-bold text-indigo-400 mb-6"
 						[routerLinkActiveOptions]="{ exact: true }"
 						>Manage</a
 					>
@@ -28,7 +28,9 @@
 				<li *ngIf="auth.isAuthenticated$ | async">
 					<a
 						class="px-2"
-						href="/upload"
+						routerLink="/upload"
+						routerLinkActive="font-bold text-indigo-400 mb-6"
+						[routerLinkActiveOptions]="{ exact: true }"
 						>Upload</a
 					>
 				</li>
