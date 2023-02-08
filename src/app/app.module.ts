@@ -12,8 +12,9 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { VideoModule } from './video/video.module';
+import { NotFoundComponent } from './not-found.component';
 @NgModule({
-	declarations: [AppComponent, NavComponent, HomeComponent, AboutComponent],
+	declarations: [AppComponent, NavComponent, HomeComponent, AboutComponent, NotFoundComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,

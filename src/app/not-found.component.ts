@@ -14,19 +14,16 @@ import { Router } from '@angular/router';
 					</div>
 					<div class="relative mt-10">
 						<div class="">
-							<h1 class="my-2 text-white-800 font-bold text-3xl">
-								Looks like you've found the
-								<span class="text-indigo-200">doorway </span>
-								<span class="text-indigo-300">to </span>
-								<span class="text-indigo-400">the </span>
-								<span class="text-indigo-500">Great </span>
-								<span class="text-indigo-600">Nothing </span>
-								<span class="text-indigo-700">!</span>
-								<span class="text-indigo-800">!</span>
-								<span class="text-indigo-900">!</span>
+							<h1 class=" my-2 text-white-800 font-bold text-3xl">
+								<span *ngFor="let word of text | slice : 0 : 2">{{ word }} </span>
+								<span
+									*ngFor="let word of text | slice : 2; let i = index"
+									[ngClass]="'text-indigo-' + i * 100"
+									>{{ word }}
+								</span>
 							</h1>
 							<p class="my-2 text-gray-300">
-								Sorry about that! Please visit our hompage to get where you need to go.
+								Sorry about that! Please visit our homepage to get where you need to go.
 							</p>
 							<button
 								(click)="navigateTo()"
@@ -45,8 +42,11 @@ import { Router } from '@angular/router';
 	`,
 })
 export class NotFoundComponent {
+	text: any[] = [];
 	constructor(public router: Router) {}
-
+	ngOnInit() {
+		this.text = "Looks like you've found the doorway to the Great Nothing !!!".split(' ');
+	}
 	public navigateTo() {
 		this.router.navigate(['/']);
 	}
