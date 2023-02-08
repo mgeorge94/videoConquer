@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
+import { ClipComponent } from './clip/clip.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found.component';
 
@@ -13,6 +13,10 @@ const routes: Routes = [
 	{
 		path: 'about',
 		component: AboutComponent,
+	},
+	{
+		path: 'clip/:id',
+		component: ClipComponent,
 	},
 	{
 		path: '**',
