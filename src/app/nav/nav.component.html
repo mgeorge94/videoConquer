@@ -3,19 +3,49 @@
 	id="header"
 	class="bg-secondary"
 >
-	<nav class="container mx-auto flex justify-start items-center py-8 px-4">
+	<nav class="container mx-auto flex justify-start items-center py-8">
 		<!-- App Name -->
 		<a
 			class="text-3xl text-indigo-400 font-bold mr-4"
-			href="index.html"
+			routerLink="/"
 			>VideoConquer</a
 		>
 
-		<div class="flex flex-grow items-center">
+		<div class="flex flex-grow justify-between">
 			<!-- Primary Navigation -->
 			<ul class="flex flex-row mt-1">
 				<!-- Navigation Links -->
-				<li *ngIf="!(auth.isAuthenticated$ | async); else authLinks">
+
+				<li *ngIf="auth.isAuthenticated$ | async">
+					<a
+						class="px-2"
+						routerLink="/manage"
+						routerLinkActive="font-bold text-indigo-400 mb-6 "
+						[routerLinkActiveOptions]="{ exact: true }"
+						[queryParams]="{ sort: '1' }"
+						>Manage</a
+					>
+				</li>
+				<li *ngIf="auth.isAuthenticated$ | async">
+					<a
+						class="px-2"
+						routerLink="/upload"
+						routerLinkActive="font-bold text-indigo-400 mb-6"
+						[routerLinkActiveOptions]="{ exact: true }"
+						>Upload</a
+					>
+				</li>
+				<li>
+					<a
+						class="px-2"
+						routerLink="/about"
+						routerLinkActive="font-bold text-indigo-400"
+						>About</a
+					>
+				</li>
+			</ul>
+			<ul class="flex flex-row-reverse mt-1">
+				<li *ngIf="!(auth.isAuthenticated$ | async); else logOut">
 					<a
 						class="px-2"
 						href="#"
@@ -24,37 +54,16 @@
 						Login / Register
 					</a>
 				</li>
-				<ng-template #authLinks>
+				<ng-template #logOut>
 					<li>
 						<a
 							class="px-2"
-							href="#"
-							>Manage</a
-						>
-					</li>
-					<li>
-						<a
-							class="px-2"
-							href="#"
-							>Upload</a
-						>
-					</li>
-					<li>
-						<a
-							class="px-2"
-							(click)="logout($event)"
+							(click)="auth.logout($event)"
 							href=""
 							>Log out</a
 						>
 					</li>
 				</ng-template>
-				<li>
-					<a
-						class="px-2"
-						href="about.html"
-						>About</a
-					>
-				</li>
 			</ul>
 		</div>
 	</nav>
