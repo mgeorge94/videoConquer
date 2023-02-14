@@ -47,4 +47,11 @@ export class ManageComponent {
 		this.modal.toggleModal('editClip');
 		this.activeClip = clip;
 	}
+	update(e: ClipInterface) {
+		this.clips.forEach((clip, index) => {
+			if (clip.docId === e.docId) {
+				this.clips[index].title = e.title;
+			}
+		});
+	}
 }

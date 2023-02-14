@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, OnChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { ModalService } from 'src/app/services/modal.service';
 import { Input } from '@angular/core';
 import { ClipInterface } from 'src/app/models/clip.model';
@@ -11,6 +11,7 @@ import { ClipService } from 'src/app/services/clip.service';
 })
 export class EditComponent implements OnInit, OnDestroy, OnChanges {
 	@Input() activeClip: ClipInterface | null = null;
+	@Output() update = new EventEmitter();
 	isSubmitting = false;
 	showAlert = false;
 	alertColor = 'blue';
@@ -40,16 +41,21 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 	}
 	ngOnChanges(): void {
 		if (!this.activeClip) return;
+		this.isSubmitting = false;
+		this.showAlert = false;
 		this.clipId.setValue(this.activeClip.docId as string);
 		this.title.setValue(this.activeClip.title);
 	}
 
 	async submit() {
+		if (!this.activeClip) return;
+
 		this.isSubmitting = true;
 		this.showAlert = true;
 		this.alertColor = 'blue';
 		this.alertMsg = 'Please wait! Updating clip';
 
+		setTimeout(() => this.modal.toggleModal('editClip'), 1000);
 		try {
 			await this.clipService.updateClip(this.clipId.value, this.title.value);
 		} catch {
@@ -58,6 +64,9 @@ export class EditComponent implements OnInit, OnDestroy, OnChanges {
 			this.alertMsg = 'Something went wrong';
 			return;
 		}
+
+		this.activeClip.title = this.title.value;
+		this.update.emit(this.activeClip);
 		this.isSubmitting = false;
 		this.alertColor = 'green';
 		this.alertMsg = 'Success!';
