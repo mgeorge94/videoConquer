@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
 import { ClipInterface } from '../models/clip.model';
 @Injectable({
 	providedIn: 'root',
@@ -10,7 +10,7 @@ export class ClipService {
 		this.clipsCollection = db.collection('clips');
 	}
 
-	async createClip(data: ClipInterface) {
-		await this.clipsCollection.add(data);
+	createClip(data: ClipInterface): Promise<DocumentReference<ClipInterface>> {
+		return this.clipsCollection.add(data);
 	}
 }
