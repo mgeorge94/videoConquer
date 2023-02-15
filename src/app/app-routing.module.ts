@@ -23,7 +23,7 @@ const routes: Routes = [
 		},
 	},
 	{
-		path: 'dashboard',
+		path: '',
 		//lazy load video module for performance reasons
 		loadChildren: async () => (await import('./video/video.module')).VideoModule,
 	},
