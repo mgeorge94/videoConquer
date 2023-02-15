@@ -6,6 +6,7 @@ import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 })
 export class FfmpegService {
 	isReady = false;
+	isRunning = false;
 	private ffmpeg;
 	constructor() {
 		this.ffmpeg = createFFmpeg({
@@ -23,6 +24,7 @@ export class FfmpegService {
 	}
 
 	async getScreenshots(file: File) {
+		this.isRunning = true;
 		const data = await fetchFile(file);
 		this.ffmpeg.FS('writeFile', file.name, data);
 
@@ -67,6 +69,8 @@ export class FfmpegService {
 			const ssURL = URL.createObjectURL(ssBlob);
 			screenshots.push(ssURL);
 		});
+		this.isRunning = false;
+
 		return screenshots;
 	}
 }
