@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ClipService } from '../services/clip.service';
 import { DatePipe } from '@angular/common';
 import { Input } from '@angular/core';
@@ -7,6 +7,7 @@ import { Input } from '@angular/core';
 	templateUrl: './clips-list.component.html',
 	styleUrls: ['./clips-list.component.css'],
 	providers: [DatePipe],
+	encapsulation: ViewEncapsulation.None,
 })
 export class ClipsListComponent implements OnInit, OnDestroy {
 	@Input() scrollable = true;
