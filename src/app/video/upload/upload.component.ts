@@ -77,13 +77,13 @@ export class UploadComponent implements OnDestroy {
 		const clipFileName = uuid();
 		const clipPath = `clips/${clipFileName}.mp4`;
 		const ssBlob = await this.ffmpegService.blobFromUrl(this.selectedSS);
-		const ssPath = `screenshot/${clipFileName}.png`;
+		const ssPath = `screenshots/${clipFileName}.png`;
 
-		//upload clip to firebase
+		//upload clip to firebase storage
 		this.task = this.storage.upload(clipPath, this.file);
 		const clipRef = this.storage.ref(clipPath);
 
-		//upload ss to firebase
+		//upload ss to firebase storage
 		this.ssTask = this.storage.upload(ssPath, ssBlob);
 
 		const ssRef = this.storage.ref(ssPath);
@@ -95,7 +95,7 @@ export class UploadComponent implements OnDestroy {
 			const total = clipProgress + ssProgress;
 			this.percentage = (total as number) / 200;
 		});
-
+		// create a document object for firestore database
 		forkJoin([this.task.snapshotChanges(), this.ssTask.snapshotChanges()])
 			.pipe(switchMap(() => forkJoin([clipRef.getDownloadURL(), ssRef.getDownloadURL()])))
 			.subscribe({
@@ -108,6 +108,7 @@ export class UploadComponent implements OnDestroy {
 						fileName: `${clipFileName}.mp4`,
 						url: clipURL,
 						ssURL,
+						ssFilename: `${clipFileName}.png`,
 						timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 					};
 					const clipDocRef = await this.clipService.createClip(clip);

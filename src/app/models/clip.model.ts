@@ -6,6 +6,7 @@ export interface ClipInterface {
 	fileName: string;
 	url: string;
 	ssUrl?: string;
+	ssFilename: string;
 	timestamp: firebase.firestore.FieldValue;
 	docId?: string;
 }
