@@ -16,6 +16,7 @@ export class ManageComponent {
 	clips: ClipInterface[] = [];
 	activeClip: ClipInterface | null = null;
 	sort$: BehaviorSubject<string>;
+	active: number | null = null;
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
@@ -69,5 +70,12 @@ export class ManageComponent {
 				this.clips.splice(index, 1);
 			}
 		});
+	}
+	async copyToClipboard(e: MouseEvent, clip: ClipInterface) {
+		this.activeClip = clip;
+		e.preventDefault();
+		if (!clip.docId) return;
+		const url = `${location.origin}/clip/${clip.docId}`;
+		await navigator.clipboard.writeText(url);
 	}
 }
