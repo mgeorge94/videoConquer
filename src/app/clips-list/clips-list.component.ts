@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ClipService } from '../services/clip.service';
 import { DatePipe } from '@angular/common';
 import { Input } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 @Component({
 	selector: 'app-clips-list',
 	templateUrl: './clips-list.component.html',
@@ -11,7 +12,7 @@ import { Input } from '@angular/core';
 })
 export class ClipsListComponent implements OnInit, OnDestroy {
 	@Input() scrollable = true;
-	constructor(public clipService: ClipService) {
+	constructor(public clipService: ClipService, private router: Router) {
 		this.clipService.getClips();
 	}
 
@@ -19,6 +20,12 @@ export class ClipsListComponent implements OnInit, OnDestroy {
 		if (this.scrollable) {
 			window.addEventListener('scroll', this.handleScroll);
 		}
+		//auto scroll to top
+		this.router.events.subscribe((x) => {
+			if (x instanceof NavigationEnd) {
+				window.scrollTo(0, 0);
+			}
+		});
 	}
 
 	ngOnDestroy(): void {
