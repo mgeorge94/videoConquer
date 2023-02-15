@@ -73,4 +73,10 @@ export class FfmpegService {
 
 		return screenshots;
 	}
+	async blobFromUrl(url: string) {
+		//have to convert the storageUrl back to a blob so firebase knows what' to do with it
+		const resp = await fetch(url);
+		const blob = await resp.blob();
+		return blob;
+	}
 }

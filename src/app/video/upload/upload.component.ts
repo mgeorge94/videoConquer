@@ -27,6 +27,7 @@ export class UploadComponent implements OnDestroy {
 	task?: AngularFireUploadTask;
 	screenshots: string[] = [];
 	selectedSS = '';
+	ssSask?: AngularFireUploadTask;
 
 	title = new FormControl('', {
 		validators: [Validators.required, Validators.minLength(3)],
@@ -65,7 +66,7 @@ export class UploadComponent implements OnDestroy {
 		this.title.setValue(this.file.name.replace(/\.[^/.]+$/, ''));
 		this.nextStep = true;
 	}
-	uploadFile() {
+	async uploadFile() {
 		this.uploadForm.disable();
 		this.showAlert = true;
 		this.alertColor = 'blue';
@@ -74,9 +75,17 @@ export class UploadComponent implements OnDestroy {
 		this.showPercentage = true;
 		const clipFileName = uuid();
 		const clipPath = `clips/${clipFileName}.mp4`;
+		const ssBlob = await this.ffmpegService.blobFromUrl(this.selectedSS);
+		const ssPath = `screenshot/${clipFileName}.png`;
+
+		//upload clip to firebase
 		this.task = this.storage.upload(clipPath, this.file);
 		const clipRef = this.storage.ref(clipPath);
 
+		//upload ss to firebase
+		this.ssSask = this.storage.upload(ssPath, ssBlob);
+
+		//visual representation of upload status via percentages
 		this.task.percentageChanges().subscribe((progress) => {
 			this.percentage = (progress as number) / 100;
 		});
@@ -102,6 +111,7 @@ export class UploadComponent implements OnDestroy {
 					this.alertMsg = 'Be happy! You are ready to flex with your new uploaded clip';
 					this.showPercentage = false;
 
+					// this is required in order for the user to see the success message, and only after be redirected
 					setTimeout(() => {
 						this.router.navigate(['clip', clipDocRef.id]);
 					}, 1000);
