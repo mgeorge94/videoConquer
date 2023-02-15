@@ -15,8 +15,10 @@ import { VideoModule } from './video/video.module';
 import { ClipComponent } from './clip/clip.component';
 import { NotFoundComponent } from './not-found.component';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { ClipsListComponent } from './clips-list/clips-list.component';
+import { FbTimestampPipe } from './pipes/fb-timestamp.pipe';
 @NgModule({
-	declarations: [AppComponent, NavComponent, HomeComponent, AboutComponent, ClipComponent, NotFoundComponent],
+	declarations: [AppComponent, NavComponent, HomeComponent, AboutComponent, ClipComponent, NotFoundComponent, ClipsListComponent, FbTimestampPipe],
 	imports: [
 		BrowserModule,
 		UserModule,

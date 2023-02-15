@@ -39,8 +39,9 @@
 			<!-- Image -->
 			<a href="#">
 				<img
+					crossorigin
 					class="card-img-top rounded-tl-2xl w-full"
-					src="assets/img/1.jpg"
+					[src]="clip.ssURL"
 				/>
 			</a>
 
@@ -48,16 +49,21 @@
 			<div class="p-6 text-2xl">
 				<!-- Link -->
 				<a
-					href="#"
+					[routerLink]="['/', 'clip', clip.docId]"
 					class="font-bold mb-2"
 				>
 					{{ clip.title }}
 				</a>
 				<a
+					(click)="copyToClipboard($event, clip)"
 					href="#"
-					class="bg-gray-400 text-white px-2 py-1 ml-2 text-sm rounded"
+					[ngClass]="{
+						'bg-gray-400': activeClip !== clip,
+						'bg-green-400': activeClip === clip
+					}"
+					class="text-white px-2 py-1 ml-2 text-sm rounded"
 				>
-					Copy Link
+					{{ activeClip === clip ? 'Copied' : 'Copy Link' }}
 				</a>
 			</div>
 
