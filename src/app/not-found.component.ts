@@ -25,6 +25,7 @@ import { Router } from '@angular/router';
 							<p class="my-2 text-gray-300">
 								Sorry about that! Please visit our homepage to get where you need to go.
 							</p>
+
 							<button
 								(click)="navigateTo()"
 								class="sm:w-full lg:w-auto my-2  rounded md py-4 px-8 text-center bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50"
@@ -36,7 +37,10 @@ import { Router } from '@angular/router';
 				</div>
 			</div>
 			<div>
-				<img src="https://i.ibb.co/ck1SGFJ/Group.png" />
+				<img
+					crossorigin
+					src="https://i.ibb.co/ck1SGFJ/Group.png"
+				/>
 			</div>
 		</div>
 	`,
