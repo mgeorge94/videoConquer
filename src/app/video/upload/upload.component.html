@@ -45,7 +45,8 @@
 							*ngFor="let screenshot of screenshots"
 							class="border-8 cursor-pointer border-green-400"
 						>
-							<img [src]="screenshot" />
+							<!-- needs custom pipe because the url created by the ffmpeg service is created from a blob and is is interpreted as unsafe.  -->
+							<img [src]="screenshot | safeUrl" />
 						</div>
 					</div>
 
