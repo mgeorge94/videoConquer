@@ -2,13 +2,13 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { v4 as uuid } from 'uuid';
-import { last, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { ClipService } from 'src/app/services/clip.service';
 import { Router } from '@angular/router';
 import { FfmpegService } from 'src/app/services/ffmpeg.service';
-import { combineLatest } from 'rxjs';
+import { combineLatest, forkJoin } from 'rxjs';
 @Component({
 	selector: 'app-upload',
 	templateUrl: './upload.component.html',
@@ -86,6 +86,8 @@ export class UploadComponent implements OnDestroy {
 		//upload ss to firebase
 		this.ssTask = this.storage.upload(ssPath, ssBlob);
 
+		const ssRef = this.storage.ref(ssPath);
+
 		//visual representation of upload status via percentages
 		combineLatest([this.task.percentageChanges(), this.ssTask.percentageChanges()]).subscribe((progress) => {
 			const [clipProgress, ssProgress] = progress;
@@ -94,20 +96,18 @@ export class UploadComponent implements OnDestroy {
 			this.percentage = (total as number) / 200;
 		});
 
-		this.task
-			.snapshotChanges()
-			.pipe(
-				last(),
-				switchMap(() => clipRef.getDownloadURL())
-			)
+		forkJoin([this.task.snapshotChanges(), this.ssTask.snapshotChanges()])
+			.pipe(switchMap(() => forkJoin([clipRef.getDownloadURL(), ssRef.getDownloadURL()])))
 			.subscribe({
-				next: async (url) => {
+				next: async (urls) => {
+					const [clipURL, ssURL] = urls;
 					const clip = {
 						uid: this.user?.uid as string,
 						displayName: this.user?.displayName as string,
 						title: this.title.value,
 						fileName: `${clipFileName}.mp4`,
-						url,
+						url: clipURL,
+						ssURL,
 						timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 					};
 					const clipDocRef = await this.clipService.createClip(clip);
