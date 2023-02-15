@@ -8,6 +8,7 @@ import firebase from 'firebase/compat/app';
 import { ClipService } from 'src/app/services/clip.service';
 import { Router } from '@angular/router';
 import { FfmpegService } from 'src/app/services/ffmpeg.service';
+import { combineLatest } from 'rxjs';
 @Component({
 	selector: 'app-upload',
 	templateUrl: './upload.component.html',
@@ -27,7 +28,7 @@ export class UploadComponent implements OnDestroy {
 	task?: AngularFireUploadTask;
 	screenshots: string[] = [];
 	selectedSS = '';
-	ssSask?: AngularFireUploadTask;
+	ssTask?: AngularFireUploadTask;
 
 	title = new FormControl('', {
 		validators: [Validators.required, Validators.minLength(3)],
@@ -83,11 +84,14 @@ export class UploadComponent implements OnDestroy {
 		const clipRef = this.storage.ref(clipPath);
 
 		//upload ss to firebase
-		this.ssSask = this.storage.upload(ssPath, ssBlob);
+		this.ssTask = this.storage.upload(ssPath, ssBlob);
 
 		//visual representation of upload status via percentages
-		this.task.percentageChanges().subscribe((progress) => {
-			this.percentage = (progress as number) / 100;
+		combineLatest([this.task.percentageChanges(), this.ssTask.percentageChanges()]).subscribe((progress) => {
+			const [clipProgress, ssProgress] = progress;
+			if (!clipProgress || !ssProgress) return;
+			const total = clipProgress + ssProgress;
+			this.percentage = (total as number) / 200;
 		});
 
 		this.task
