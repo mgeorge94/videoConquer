@@ -1,13 +1,36 @@
 <div class="container mx-auto mt-4 max-w-4xl">
-	<h3 class="mb-4 font-medium text-2xl">It's time to share your greatest gaming moments!</h3>
+	<h3 class="mb-4 font-medium text-2xl text-indigo-400 uppercase">It's time to share your greatest gaming moments!</h3>
 
+	<p>Welcome to VideoConquer - the ultimate destination to share your gaming greatness!</p>
 	<p>
-		Are you ready to show the world your greatest gaming moments? At ShareTheMoment, we make it easy for gamers to capture and
-		share their best in-game clips with friends and fans. We provide a platform for players of all ages and abilities to show
-		off their skills and become internet-famous for their amazing gaming moments. ShareTheMoment offers the latest video
-		streaming technology, so you can easily upload your clips and have them featured on the website in no time. Plus, our
-		custom algorithms automatically create highlight reels from your clips, so everybody can enjoy your achievements. So, if
-		you're a budding gaming star or just like playing games with friends, ShareTheMoment is the place for you. Join today and
-		start showcasing your gaming greatness!
+		VideoConquer makes it easy for gamers of all levels to showcase their skills and become famous for their amazing gaming
+		moments. We provide a platform to capture in-game clips and share them with friends and fans, so you can get the
+		recognition you deserve. Thanks to the our video streaming technology, you can easily upload your clips and have them
+		featured on our website in no time. Plus, our custom algorithms create highlight reels from your clips, so everyone can
+		enjoy your achievements.
+	</p>
+	<h5 class="mt-4">Here's what VideoConquer can do for you:</h5>
+	<ul class="list-disc">
+		<li class="ml-8">Capture and upload your in-game highlights with our easy-to-use tools</li>
+		<li class="ml-8">Make highlight reels automatically with our custom algorithms</li>
+		<li class="ml-8">Share your clips with friends and fans and get the recognition you deserve</li>
+		<li class="ml-8">
+			Enjoy watching other players’ clips and comment or like them So, if you’re a budding star or just like playing games
+			with friends, VideoConquer is the place for you.
+		</li>
+	</ul>
+	<p class="flex items-center justify-center">
+		<span
+			*ngFor="let word of joinText | slice : 0 : joinText.length / 2; let i = index"
+			[ngClass]="'text-' + i * 2 + 'xl'"
+		>
+			{{ word }}
+		</span>
+		<span
+			*ngFor="let word of joinText | slice : joinText.length / 2 : joinText.length; let i = index"
+			[ngClass]="'text-' + (joinText.length - i - 4) + 'xl'"
+		>
+			{{ word }}
+		</span>
 	</p>
 </div>

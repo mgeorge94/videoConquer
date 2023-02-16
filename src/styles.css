@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+	scroll-behavior: smooth;
+}
 body {
 	background-color: #161d31;
 }
@@ -72,7 +75,6 @@ body {
 	display: block;
 	border-bottom: 3px solid #fff;
 }
-
 .ghost {
 	border-radius: 150px 150px 7px 7px;
 	-webkit-animation: ghost 1.5s ease-in-out alternate infinite;
