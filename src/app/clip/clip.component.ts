@@ -26,6 +26,7 @@ export class ClipComponent {
 				src: this.clip.url,
 				type: 'video/mp4',
 			});
+			this.player?.play();
 		});
 	}
 }
