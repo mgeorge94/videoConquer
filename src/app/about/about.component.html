@@ -22,13 +22,13 @@
 	<p class="flex items-center justify-center">
 		<span
 			*ngFor="let word of joinText | slice : 0 : joinText.length / 2; let i = index"
-			[ngClass]="'text-' + i * 2 + 'xl'"
+			[ngClass]="'text-' + i * 2 + 'xl' + ' ' + 'text-indigo-' + (joinText.length - 4 - i) * 100"
 		>
 			{{ word }}
 		</span>
 		<span
 			*ngFor="let word of joinText | slice : joinText.length / 2 : joinText.length; let i = index"
-			[ngClass]="'text-' + (joinText.length - i - 4) + 'xl'"
+			[ngClass]="'text-' + (joinText.length - i - 4) + 'xl' + ' ' + 'text-indigo-' + i * 100"
 		>
 			{{ word }}
 		</span>
